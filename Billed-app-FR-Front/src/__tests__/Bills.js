@@ -41,15 +41,7 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
-    test("", () => {
-      document.body.innerHTML = BillsUI({ data: bills })
-      const dates = screen.getAllByText
-                    (/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i)
-                    .map(a => a.innerHTML)
-      const antiChrono = (a, b) => ((a < b) ? 1 : -1)
-      const datesSorted = [...dates].sort(antiChrono)
-      expect(dates).toEqual(datesSorted)
-    })
+  
     test("Then modal should be displayed with correct content when eye icon is clicked", async () => {
       const billUrl = "http://127.0.0.1:5500/src/assets/images/facturefreemobile.jpg"
       const billsService = new Bills({
@@ -88,17 +80,16 @@ describe("Given I am connected as an employee", () => {
       const billsService = new Bills({
         document, onNavigate, localStorage: window.localStorage
       })
-      // window.onNavigate(ROUTES_PATH.Bills)
 
       document.body.innerHTML = BillsUI({ data: bills })
       const buttonNewBill = screen.getAllByTestId('btn-new-bill')[0]
     
-      const handleClickNewBill = jest.fn((e) => billsService.handleClickNewBill())
+      const handleBtnClickNewBill = jest.fn((e) => billsService.handleClickNewBill())
 
       // Simulation d'un clic sur le boutton nouvelle note de frais
-      buttonNewBill.addEventListener('click', handleClickNewBill)
+      buttonNewBill.addEventListener('click', handleBtnClickNewBill)
       userEvent.click(buttonNewBill)
-      expect(handleClickNewBill).toHaveBeenCalled()
+      expect(handleBtnClickNewBill).toHaveBeenCalled()
 
       await waitFor(() => {
         const formNewBill = screen.queryByTestId('form-new-bill');
